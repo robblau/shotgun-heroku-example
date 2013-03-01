@@ -37,6 +37,9 @@ heroku config:push
 # Test out that you can hit up the app (this is a good way to get the target url)
 heroku open
 
+# Add the Shotgun action menu item by following the instructions at
+# https://support.shotgunsoftware.com/entries/110709-How-to-create-custom-menu-items-for-integration-with-other-pipeline-tools
+
 # Tail the logs and hit it up from the Shotgun ActionMenuItem
 heroku logs -t
 ```
