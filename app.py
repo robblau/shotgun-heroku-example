@@ -112,8 +112,6 @@ class App(object):
         shot_ids = [int(i) for i in params.getvalue('selected_ids').split(',')]
         server_hostname = params.getvalue('server_hostname')
         # connect to Shotgun
-        config = json.load(open(os.path.join(os.path.dirname(__file__), "config.json")))
-        site_config = config['api_keys'][server_hostname]
         sg = shotgun_api3.shotgun.Shotgun(
             'https://%s' % server_hostname,
             os.environ['SHOTGUN_SCRIPT_NAME'],
