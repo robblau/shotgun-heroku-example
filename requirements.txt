@@ -2,3 +2,4 @@ distribute==0.6.28
 gunicorn==0.14.6
 reportlab==2.6
 wsgiref==0.1.2
+git+git://github.com/shotgunsoftware/python-api.git@master#egg=shotgun_api3

@@ -1,6 +1,7 @@
 # Standard imports
 import os
 import cgi
+import json
 import shutil
 import urllib
 import zipfile
@@ -43,11 +44,10 @@ def report(fname, shot, versions):
     title = "Report"
     author = "Rob Blau"
 
-
     # define frames for page layout
     page = PageTemplate(frames=[
-        Frame(x1=0.1*inch, y1=8.9*inch, width=3*inch, height=2*inch), # shot thumbnail
-        Frame(x1=0.1*inch, y1=0.1*inch, width=8.3*inch, height=4*inch), # versions table
+        Frame(x1=0.1*inch, y1=8.9*inch, width=3*inch, height=2*inch),  # shot thumbnail
+        Frame(x1=0.1*inch, y1=0.1*inch, width=8.3*inch, height=4*inch),  # versions table
     ])
 
     # create the doc
@@ -104,6 +104,7 @@ def report(fname, shot, versions):
     # and save
     doc.build(story)
 
+
 class App(object):
     def __call__(self, environ, start_response):
         # parse params
@@ -111,10 +112,12 @@ class App(object):
         shot_ids = [int(i) for i in params.getvalue('selected_ids').split(',')]
         server_hostname = params.getvalue('server_hostname')
         # connect to Shotgun
+        config = json.load(open(os.path.join(os.path.dirname(__file__), "config.json")))
+        site_config = config['api_keys'][server_hostname]
         sg = shotgun_api3.shotgun.Shotgun(
             'https://%s' % server_hostname,
-            'Testing',
-            'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+            os.environ['SHOTGUN_SCRIPT_NAME'],
+            os.environ['SHOTGUN_SCRIPT_KEY'],
         )
 
         # grab shots
