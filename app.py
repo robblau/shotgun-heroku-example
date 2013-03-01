@@ -109,7 +109,7 @@ class App(object):
     def __call__(self, environ, start_response):
         # parse params
         params = cgi.FieldStorage(fp=environ['wsgi.input'], environ=environ)
-        shot_ids = [int(i) for i in params.getvalue('selected_ids').split(',')]
+        shot_ids = [int(i) for i in params.getvalue('selected_ids', []).split(',')]
         server_hostname = params.getvalue('server_hostname')
         # connect to Shotgun
         sg = shotgun_api3.shotgun.Shotgun(
